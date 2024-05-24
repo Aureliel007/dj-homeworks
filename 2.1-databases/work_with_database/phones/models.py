@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Phone(models.Model):
@@ -7,4 +8,7 @@ class Phone(models.Model):
     image = models.URLField()
     release_date = models.DateField()
     lte_exists = models.BooleanField()
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
+
+    def get_absolute_url(self):
+        return reverse('phone', kwargs={'slug': self.slug})
